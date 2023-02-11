@@ -1,0 +1,8 @@
+﻿  chat_server.cpp
+  Please define _WIN32_WINNT or _WIN32_WINDOWS appropriately. For example:
+  - add -D_WIN32_WINNT=0x0601 to the compiler command line; or
+  - add _WIN32_WINNT=0x0601 to your project's Preprocessor Definitions.
+  Assuming _WIN32_WINNT=0x0601 (i.e. Windows 7 target).
+C:\권민재\ClientCheat\서버 수업 자료\chat_server\chat_server.h(133,39): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+C:\권민재\ClientCheat\서버 수업 자료\chat_server\chat_server.h(143,39): warning C4018: '<': signed 또는 unsigned가 일치하지 않습니다.
+  Project4.vcxproj -> C:\권민재\ClientCheat\서버 수업 자료\chat_server\Debug\Project4.exe

@@ -8,3 +8,24 @@ room =>
 받는 시점이 다르다.
 요청과 결과가 항상 다르다.
 
+https://www.devoops.kr/77
+부스트 비주얼 스튜디오 와 연동 
+
+
+std::vector<boost::shared_ptr<boost::thread> > threads;
+            for (std::size_t i = 0; i < thread_pool_size_; ++i)
+            {
+                boost::shared_ptr<boost::thread> thread(new boost::thread(
+                    boost::bind(&boost::asio::io_context::run, &io_context_)));
+                threads.push_back(thread);
+            }
+
+-> 스레드 만드는곳 
+
+
+  io_context::run -> update
+
+join -> 스레드가 끝남
+
+ *resolver.resolve(address, port).begin();
+=> ip 이름을 가져오는 역활

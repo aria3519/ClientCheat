@@ -156,6 +156,7 @@ private:
 
                     printf_s(str);
                     printf_s("\n");
+                    read_msg_.encode_header();
                     room_.deliver(read_msg_);
                     do_read_header();
                 }
