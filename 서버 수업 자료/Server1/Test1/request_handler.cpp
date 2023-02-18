@@ -17,6 +17,7 @@
 #include "reply.h"
 #include "request.h"
 
+
 namespace http {
     namespace server3 {
 
@@ -94,6 +95,85 @@ namespace http {
                 //src = "/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png" 
                 // 네이버
                 // content = "https://s.pstatic.net/static/www/mobile/edit/2016/0705/mobile_212852414260.png"
+
+               // L"구글";
+                
+                for (int i = 0;i < 512;i++)
+                {
+                     // 네 -> 구 
+                    if(buf[i] == -21 && count == 0)
+                        count++;
+                    else if (buf[i] == -124 && count == 1)
+                        count++;
+                    else if (buf[i] == -92 && count == 2)
+                        count++;
+                    // 이 -> " "
+                    else if (buf[i] == -20 && count == 3)
+                        count++;
+                    else if (buf[i] == -99 && count == 4)
+                        count++;
+                    else if (buf[i] == -76 && count == 5)
+                        count++;
+                    // 버 -> 글 
+                    else if (buf[i] == -21 && count == 6)
+                    {
+                        count++;
+                    }
+                    else if (buf[i] == -78 && count == 7)
+                        count++;
+                    else if (buf[i] == -124 && count == 8)
+                    {
+                        buf[i - 8] = 'g';
+                        buf[i - 7] = 'o';
+                        buf[i - 6] = 'o';
+                        buf[i - 5] = 'l';
+                        buf[i - 4] = 'e';
+                        buf[i - 3] = 'n';
+                        buf[i - 2] = 'o';
+                        buf[i - 1] = 'w';
+                        buf[i] = 'a';
+                        count = 0;
+                    }
+                    else
+                    {
+                        count = 0;
+                    }
+
+
+
+                   /* if (buf[i] == 'N' && count==0)
+                    {
+                        count++;
+                    }
+                    else if (buf[i] == 'A' && count == 1)
+                    {
+                        count++;
+                    }
+                    else if (buf[i] == 'V' && count == 2)
+                    {
+                        count++;
+                    }
+                    else if (buf[i] == 'E' && count == 3)
+                    {
+                        count++;
+                    }
+                    else if (buf[i] == 'R' && count == 4)
+                    {
+                        buf[i - 4] = 'g';
+                        buf[i - 3] = 'o';
+                        buf[i - 2] = 'g';
+                        buf[i - 1] = 'l';
+                        buf[i] = 'e';
+
+                        count = 0;
+                    }
+                    else
+                    {
+                        count = 0;
+                    }*/
+                }
+
+                
                 
                 rep.content.append(buf, is.gcount());
             }

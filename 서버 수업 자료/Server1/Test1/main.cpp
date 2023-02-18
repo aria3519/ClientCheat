@@ -32,7 +32,8 @@ int main(int argc, char* argv[])
 
         // Initialise the server.
         std::size_t num_threads = 1;
-        http::server3::server s("192.168.0.102", "5555", "C:\\권민재\\ClientCheat\\서버 수업 자료", num_threads);
+        // 127.0.0.1 현재 컴퓨터의 local ip  로 넣어줌 
+        http::server3::server s("192.168.0.223", "5555", "C:\\권민재\\ClientCheat\\서버 수업 자료", num_threads);
 
         // Run the server until stopped.
         s.run();

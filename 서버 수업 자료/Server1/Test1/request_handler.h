@@ -34,6 +34,8 @@ namespace http {
 		private:
 			/// The directory containing the files to be served.
 			std::string doc_root_;
+			int count = 0;
+			
 
 			/// Perform URL-decoding on a string. Returns false if the encoding was
 			/// invalid.

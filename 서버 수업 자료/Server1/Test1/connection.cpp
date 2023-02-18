@@ -46,10 +46,11 @@ namespace http {
         {
             if (!e)
             {
+              
                 boost::tribool result;
                 boost::tie(result, boost::tuples::ignore) = request_parser_.parse(
                     request_, buffer_.data(), buffer_.data() + bytes_transferred);
-                printf_s(buffer_.data());
+                printf(buffer_.data());
                 if (result) // ¼­¹ö cmd
                 {
                     request_handler_.handle_request(request_, reply_);
