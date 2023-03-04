@@ -139,9 +139,16 @@
     <ClInclude Include="reply.h" />
     <ClInclude Include="request_parser.h" />
     <ClInclude Include="request_handler.h" />
+    <ClInclude Include="mime_types.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="main.cpp" />
     <ClCompile Include="server.cpp" />
+    <ClCompile Include="connection.cpp" />
+    <ClCompile Include="request_handler.cpp" />
+    <ClCompile Include="reply.cpp" />
+    <ClCompile Include="request_parser.cpp" />
+    <ClCompile Include="mime_types.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
