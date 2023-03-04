@@ -126,12 +126,12 @@ namespace http {
                         buf[i - 8] = 'g';
                         buf[i - 7] = 'o';
                         buf[i - 6] = 'o';
-                        buf[i - 5] = 'l';
-                        buf[i - 4] = 'e';
-                        buf[i - 3] = 'n';
-                        buf[i - 2] = 'o';
-                        buf[i - 1] = 'w';
-                        buf[i] = 'a';
+                        buf[i - 5] = 'g';
+                        buf[i - 4] = 'l';
+                        buf[i - 3] = 'e';
+                        buf[i - 2] = ' ';
+                        buf[i - 1] = ' ';
+                        buf[i] = ' ';
                         count = 0;
                     }
                     else
