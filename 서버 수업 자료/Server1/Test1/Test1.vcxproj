@@ -145,12 +145,14 @@
   <ItemGroup>
     <ClInclude Include="connection.h" />
     <ClInclude Include="header.h" />
+    <ClInclude Include="message.h" />
     <ClInclude Include="mime_types.h" />
     <ClInclude Include="reply.h" />
     <ClInclude Include="request_handler.h" />
     <ClInclude Include="request_parser.h" />
     <ClInclude Include="server.h" />
     <ClInclude Include="request.h" />
+    <ClInclude Include="Server_MJ.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="connection.cpp" />
