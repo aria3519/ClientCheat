@@ -18,6 +18,13 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Message.h" />
+    <ClInclude Include="Server.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -142,27 +149,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClInclude Include="connection.h" />
-    <ClInclude Include="header.h" />
-    <ClInclude Include="message.h" />
-    <ClInclude Include="mime_types.h" />
-    <ClInclude Include="reply.h" />
-    <ClInclude Include="request_handler.h" />
-    <ClInclude Include="request_parser.h" />
-    <ClInclude Include="server.h" />
-    <ClInclude Include="request.h" />
-    <ClInclude Include="Server_MJ.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClCompile Include="connection.cpp" />
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="mime_types.cpp" />
-    <ClCompile Include="reply.cpp" />
-    <ClCompile Include="request_parser.cpp" />
-    <ClCompile Include="server.cpp" />
-    <ClCompile Include="request_handler.cpp" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -1,70 +1,195 @@
-//
-// server.hpp
-// ~~~~~~~~~~
-//
-// Copyright (c) 2003-2022 Christopher M. Kohlhoff (chris at kohlhoff dot com)
-//
-// Distributed under the Boost Software License, Version 1.0. (See accompanying
-// file LICENSE_1_0.txt or copy at http://www.boost.org/LICENSE_1_0.txt)
-//
+#pragma once
 
-#ifndef HTTP_SERVER3_SERVER_HPP
-#define HTTP_SERVER3_SERVER_HPP
-
+#include <cstdlib>
+#include <deque>
+#include <iostream>
+#include <list>
+#include <memory>
+#include <set>
+#include <utility>
 #include <boost/asio.hpp>
+#include "Message.h"
 #include <string>
-#include <vector>
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
-#include "connection.h"
-#include "request_handler.h"
 
-namespace http {
-    namespace server3 {
 
-        /// The top-level class of the HTTP server.
-        class server
-            : private boost::noncopyable
-        {
-        public:
-            /// Construct the server to listen on the specified TCP address and port, and
-            /// serve up files from the given directory.
-            explicit server(const std::string& address, const std::string& port,
-                const std::string& doc_root, std::size_t thread_pool_size);
+using boost::asio::ip::tcp;
 
-            /// Run the server's io_context loop.
-            void run();
 
-        private:
-            /// Initiate an asynchronous accept operation.
-            void start_accept();
+typedef std::deque<Message> Message_queue;
 
-            /// Handle completion of an asynchronous accept operation.
-            void handle_accept(const boost::system::error_code& e);
+class User
+{
+public:
+	virtual ~User() {}
+	virtual void deliver(const Message& msg) = 0;
+};
 
-            /// Handle a request to stop the server.
-            void handle_stop();
+typedef std::shared_ptr<User> User_ptr;
 
-            /// The number of threads that will call io_context::run().
-            std::size_t thread_pool_size_;
 
-            /// The io_context used to perform asynchronous operations.
-            boost::asio::io_context io_context_;
+class Room
+{
+public:
+	void join(User_ptr user)
+	{
+		_list_User.push_back(user);
+		for (auto msg : _recent_msgs)
+		{
+			user->deliver(msg);
+		}
+	 }
+	void leave(User_ptr user)
+	{
+		_list_User.remove(user);	
+	}
 
-            /// The signal_set is used to register for process termination notifications.
-            boost::asio::signal_set signals_;
+	void deliver(const Message& msg)
+	{
+		_recent_msgs.push_back(msg);
 
-            /// Acceptor used to listen for incoming connections.
-            boost::asio::ip::tcp::acceptor acceptor_;
+		while (_recent_msgs.size() > max_msgs)
+			_recent_msgs.pop_front();
+	}
+	
 
-            /// The next connection to be accepted.
-            connection_ptr new_connection_;
+private:
+	std::list<User_ptr> _list_User;
+	const int max_msgs = 100;
+	Message_queue _recent_msgs;
 
-            /// The handler for all incoming requests.
-            request_handler request_handler_;
-        };
+};
 
-    } // namespace server3
-} // namespace http
+class Player
+{
+public:
+	
 
-#endif // HTTP_SERVER3_SERVER_HPP
+private:
+
+};
+
+class Session : public User,
+	public std::enable_shared_from_this<Session>
+{
+public:
+	Session(tcp::socket socket,Room& room)
+		: _socket(std::move(socket)), _room(room)
+	{
+
+	}
+
+	void start()
+	{
+		_room.join(shared_from_this());
+		do_read_header();
+	}
+
+	void deliver( const Message& msg)
+	{
+		bool write = !write_msgs.empty();
+		write_msgs.push_back(msg);
+		if (!write)
+		{
+			
+		}
+	}
+private:
+	tcp::socket _socket;
+	Room& _room;
+	Message _read_msg;
+	Message_queue write_msgs;
+	
+
+	void do_read_header()
+	{
+		auto self(shared_from_this());
+		// 스마트 포인트 속박용
+		boost::asio::async_read(_socket,
+			boost::asio::buffer(_read_msg.data(), Message::header_length),
+			[this, self](boost::system::error_code e, std::size_t)
+			{
+				if (!e && _read_msg.decode_header())
+				{
+					do_read_body();
+				}
+				else
+				{
+					_room.leave(shared_from_this());
+				}
+
+			});
+		
+
+	}
+	void do_read_body()
+	{
+
+		auto self(shared_from_this());
+		boost::asio::async_read(_socket,
+			boost::asio::buffer(_read_msg.body(), _read_msg.body_length()),
+			[this, self](boost::system::error_code e, std::size_t)
+			{
+
+				if (!e)
+				{
+					char temp[50] = "";
+					char str[50] = "player";
+
+					for (int i = 0;i < _read_msg.body_length();i++)
+					{
+						//if(_read_msg.body()[i]!=)
+					}
+				}
+
+			});
+	}
+	void do_write()
+	{
+
+	}
+};
+
+class Server
+{
+
+public:
+	Server(boost::asio::io_context& context,
+		const tcp::endpoint& endpoint)
+		:acceptor(context,endpoint)
+
+	{
+		GetData();
+	}
+
+
+
+	
+
+
+private:
+	tcp::acceptor acceptor;
+
+
+
+	void GetData()
+	{
+		acceptor.async_accept(
+			[this](boost::system::error_code e, tcp::socket socket)
+			{
+				if (!e)
+				{
+					// session활성화 
+					
+				}
+				GetData();
+
+			});
+	}
+
+
+};
+
+
+
+
+

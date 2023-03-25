@@ -13,66 +13,18 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="소스 파일\Base">
-      <UniqueIdentifier>{8de55100-102f-49e0-935c-1382725ce1c8}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="헤더 파일\BaseHeader">
-      <UniqueIdentifier>{c9c1e426-eaac-4e54-a42d-23c129d0c805}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="connection.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="header.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="mime_types.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="reply.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="request.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="request_handler.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="request_parser.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="server.h">
-      <Filter>헤더 파일\BaseHeader</Filter>
-    </ClInclude>
-    <ClInclude Include="Server_MJ.h">
+    <ClInclude Include="Server.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="message.h">
+    <ClInclude Include="Message.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="connection.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="mime_types.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="reply.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="request_handler.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="request_parser.cpp">
-      <Filter>소스 파일\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="server.cpp">
-      <Filter>소스 파일\Base</Filter>
+      <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
