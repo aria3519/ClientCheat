@@ -14,7 +14,7 @@ int main(int argc, char* argv[])
         boost::asio::io_context io_context;
 
         tcp::resolver resolver(io_context);
-        auto endpoints = resolver.resolve("192.168.0.223","5555");
+        auto endpoints = resolver.resolve("192.168.0.219","5555");
         chat_client c(io_context, endpoints);
 
         std::thread t([&io_context]() { io_context.run(); });

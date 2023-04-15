@@ -10,7 +10,7 @@ int main(int argc, char* argv[])
 		tcp::endpoint end(tcp::v4(), 5555);
 		// 서버가 context 랑 endpoint 받아야함
 		Server server(context,end);
-
+		Server serv(context, end);
 		context.run();
 
 

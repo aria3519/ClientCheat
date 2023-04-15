@@ -32,7 +32,7 @@ class Room
 public:
 	void join(User_ptr user)
 	{
-		_list_User.push_back(user);
+		_list_User.insert(user);
 		for (auto msg : _recent_msgs)
 		{
 			user->deliver(msg);
@@ -40,33 +40,29 @@ public:
 	 }
 	void leave(User_ptr user)
 	{
-		_list_User.remove(user);	
+		_list_User.erase(user);
 	}
 
 	void deliver(const Message& msg)
 	{
 		_recent_msgs.push_back(msg);
 
-		while (_recent_msgs.size() > max_msgs)
+		while (_recent_msgs.size() > max_recent_msgs)
 			_recent_msgs.pop_front();
+
+		for (auto user : _list_User)
+			user->deliver(msg);
 	}
 	
 
 private:
-	std::list<User_ptr> _list_User;
-	const int max_msgs = 100;
+	std::set<User_ptr> _list_User;
+	enum { max_recent_msgs = 100 };
 	Message_queue _recent_msgs;
 
 };
 
-class Player
-{
-public:
-	
 
-private:
-
-};
 
 class Session : public User,
 	public std::enable_shared_from_this<Session>
@@ -90,7 +86,7 @@ public:
 		write_msgs.push_back(msg);
 		if (!write)
 		{
-			
+			do_write();
 		}
 	}
 private:
@@ -137,15 +133,63 @@ private:
 
 					for (int i = 0;i < _read_msg.body_length();i++)
 					{
-						//if(_read_msg.body()[i]!=)
+						if (_read_msg.body()[i] != NULL)
+							temp[i] = _read_msg.body()[i];
+						else
+						{
+							break;
+						}
 					}
+					int num = 0;
+					for (int i = 6 ;i < 7 + _read_msg.body_length() ; i++)
+					{
+						if (i == 6)
+							str[i] = ':';
+						else
+						{
+							str[i] = temp[num];
+							num++;
+						}
+
+					}
+					_read_msg.setbody(str, 7 + _read_msg.body_length());
+
+					printf_s(str);
+					printf_s("\n");
+					_read_msg.encode_header();
+					_room.deliver(_read_msg);
+					do_read_header();
+				
 				}
+				else
+				{
+					_room.leave(shared_from_this());
+				}
+				
 
 			});
 	}
 	void do_write()
 	{
-
+		auto self(shared_from_this());
+		boost::asio::async_write(_socket,
+			boost::asio::buffer(write_msgs.front().data(),
+				write_msgs.front().length()),
+			[this, self](boost::system::error_code ec, std::size_t /*length*/)
+			{
+				if (!ec)
+				{
+					write_msgs.pop_front();
+					if (!write_msgs.empty())
+					{
+						do_write();
+					}
+				}
+				else
+				{
+					_room.leave(shared_from_this());
+				}
+			});
 	}
 };
 
@@ -168,6 +212,7 @@ public:
 
 private:
 	tcp::acceptor acceptor;
+	Room _room;
 
 
 
@@ -178,7 +223,8 @@ private:
 			{
 				if (!e)
 				{
-					// session활성화 
+					// session활성화
+					std::make_shared<Session>(std::move(socket), _room)->start();
 					
 				}
 				GetData();
